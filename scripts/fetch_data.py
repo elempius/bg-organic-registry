@@ -4,7 +4,7 @@ artifacts (JSON + XLSX + meta) that the GitHub Pages site consumes.
 
 The source API (https://bioreg.mzh.government.bg) is a jQuery DataTables
 server-side endpoint. It requires a warm-up GET (for the session cookie) and an
-``X-Requested-With`` header, and it returns no CORS headers — so it cannot be
+``X-Requested-With`` header, and it returns no CORS headers, so it cannot be
 called from the browser. We fetch it here, out-of-band, and commit the result.
 
 Usage:

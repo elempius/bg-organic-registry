@@ -7,7 +7,7 @@ A fast, searchable mirror of the Bulgarian **organic-production operators regist
 
 The official site is a slow, server-paged jQuery DataTables UI with awkward search and no
 usable export. This project provides instant client-side search, sorting, per-column filters,
-and one-click **Excel/CSV export** — hosted entirely on **GitHub Pages**.
+and one-click **Excel/CSV export**, hosted entirely on **GitHub Pages**.
 
 ## How it works
 
@@ -28,13 +28,13 @@ and deploys to GitHub Pages.
 
 GitHub-hosted runners use US/Azure IP ranges that the `.government.bg` API may geo-block or
 rate-limit. The workflow therefore provisions an **ephemeral self-hosted runner on Hetzner Cloud**
-(Nuremberg, EU — via [`Cyclenerd/hcloud-github-runner`](https://github.com/Cyclenerd/hcloud-github-runner))
+(Nuremberg, EU, via [`Cyclenerd/hcloud-github-runner`](https://github.com/Cyclenerd/hcloud-github-runner))
 for the fetch + build step, then destroys it. The Pages deploy runs on a normal GitHub-hosted runner.
 
 Two repository secrets are required:
 
-- `HCLOUD_TOKEN` — a Hetzner Cloud API token (Read & Write).
-- `PERSONAL_ACCESS_TOKEN` — a fine-grained GitHub PAT with **Administration: Read & write** on this
+- `HCLOUD_TOKEN`: a Hetzner Cloud API token (Read & Write).
+- `PERSONAL_ACCESS_TOKEN`: a fine-grained GitHub PAT with **Administration: Read & write** on this
   repo (to register/unregister the self-hosted runner).
 
 Enable Pages under **Settings → Pages → Build and deployment → GitHub Actions**. The site is served
@@ -43,7 +43,7 @@ domain or path config is needed).
 
 ## Tech
 
-- **Data:** Python (`requests`, `openpyxl`) — `scripts/fetch_data.py`
+- **Data:** Python (`requests`, `openpyxl`), `scripts/fetch_data.py`
 - **Frontend:** Vanilla JS + [Vite](https://vitejs.dev), [Tabulator](https://tabulator.info) table,
   [SheetJS](https://sheetjs.com) for in-browser export
 - **Hosting:** GitHub Pages at the default `github.io` URL (relative base, no custom domain)
@@ -67,3 +67,8 @@ npm run build && npm run preview    # production build
 This is an **unofficial** mirror for convenience. The authoritative source remains
 <https://bioreg.mzh.government.bg>. Per-certificate detail pages are linked back to the official
 site rather than copied.
+
+## License
+
+The source code is released under the [MIT License](LICENSE). The registry data is the public
+record of the Bulgarian Ministry of Agriculture and Food and is not covered by this license.

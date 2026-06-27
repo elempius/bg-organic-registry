@@ -71,24 +71,24 @@ function splitActivities(text) {
   if (!text) return [];
   return text
     .split(/<br\s*\/?>/i)
-    .map((p) => p.replace(/^[\s\-–—]+/, "").trim())
+    .map((p) => p.replace(/^[\s-]+/, "").trim())
     .filter(Boolean);
 }
 
 const escapeHtml = (s) =>
   String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
-// Certificate links are rebuilt from validated data — never from upstream HTML.
+// Certificate links are rebuilt from validated data, never from upstream HTML.
 const CERT_HOST = "https://bioreg.mzh.government.bg/";
 function renderCertificates(certs) {
-  if (!Array.isArray(certs) || !certs.length) return "—";
+  if (!Array.isArray(certs) || !certs.length) return "-";
   const links = certs
     .filter((c) => typeof c?.url === "string" && c.url.startsWith(CERT_HOST))
     .map(
       (c) =>
         `<a class="cert-link" href="${escapeHtml(encodeURI(c.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(c.number)}</a>`,
     );
-  return links.length ? links.join("<br>") : "—";
+  return links.length ? links.join("<br>") : "-";
 }
 
 // ---------- formatters ----------
@@ -285,15 +285,15 @@ function rebuildOptions(rows) {
 function openDetail(data) {
   ui.detailStatus.className = `pill pill--${data.status}`;
   ui.detailStatus.textContent = STATUS_LABEL[data.status] || data.status;
-  ui.detailName.textContent = data.companyName || "—";
-  ui.detailContract.textContent = data.contractCode || "—";
-  ui.detailController.textContent = data.controllerName || "—";
-  ui.detailDistrict.textContent = data.districtName || "—";
+  ui.detailName.textContent = data.companyName || "-";
+  ui.detailContract.textContent = data.contractCode || "-";
+  ui.detailController.textContent = data.controllerName || "-";
+  ui.detailDistrict.textContent = data.districtName || "-";
 
   const acts = splitActivities(data.activitiesText);
   ui.detailActivities.innerHTML = acts.length
     ? `<ul class="act-list">${acts.map((a) => `<li>${escapeHtml(a)}</li>`).join("")}</ul>`
-    : "—";
+    : "-";
 
   ui.detailCerts.innerHTML = renderCertificates(data.certificates);
 
@@ -373,7 +373,7 @@ function exportName(ext) {
 }
 
 function wire() {
-  // Logo resets to the default view in-place — no full reload (avoids a FOUC).
+  // Logo resets to the default view in-place, no full reload (avoids a FOUC).
   document.querySelector(".brand").addEventListener("click", (e) => {
     e.preventDefault();
     ui.search.value = "";

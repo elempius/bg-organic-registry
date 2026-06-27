@@ -631,6 +631,26 @@ a {
 .site-footer a {
   color: var(--ink-soft);
 }
+.footer-links {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+.footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+.footer-links a:hover {
+  color: var(--active);
+}
+.footer-links svg {
+  flex-shrink: 0;
+}
 
 /* ---------- Responsive ---------- */
 @media (max-width: 720px) {
