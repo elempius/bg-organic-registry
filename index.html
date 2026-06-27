@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="bg">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Био Регистър — сертифицирани биологични оператори</title>
+    <meta
+      name="description"
+      content="Бързо търсене в регистъра на производителите, преработвателите и търговците на земеделски продукти и храни, произведени по биологичен начин."
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="masthead">
+      <a class="brand" href="./" aria-label="Био Регистър">
+        <span class="brand-seal" aria-hidden="true">
+          <!-- Lucide "sprout" -->
+          <svg
+            viewBox="0 0 24 24"
+            width="19"
+            height="19"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M7 20h10" />
+            <path d="M10 20c5.5-2.5.8-6.4 3-10" />
+            <path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z" />
+            <path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z" />
+          </svg>
+        </span>
+        <span class="brand-name">Био&nbsp;Регистър</span>
+      </a>
+      <div class="masthead-meta">
+        <span id="updatedAt" class="updated"></span>
+        <a
+          class="source-link"
+          href="https://bioreg.mzh.government.bg/Home/DataBaseList"
+          target="_blank"
+          rel="noopener"
+          >Официален източник ↗</a
+        >
+      </div>
+    </header>
+
+    <section class="hero">
+      <h1 class="hero-title">Регистър на биологичните оператори</h1>
+      <p class="hero-sub">
+        Производители, преработватели и търговци на земеделски продукти и храни,
+        произведени по биологичен начин.
+      </p>
+
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2" />
+          <path d="m20 20-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <input
+          type="search"
+          id="globalSearch"
+          class="search"
+          placeholder="Име на оператор, договор, контролиращо лице…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button id="clearSearch" class="search-clear" title="Изчисти търсенето" hidden>✕</button>
+      </div>
+
+      <dl class="stats">
+        <div class="stat stat--active">
+          <dt>Действащи</dt>
+          <dd id="stat-active">—</dd>
+        </div>
+        <div class="stat stat--expired">
+          <dt>Изтекли</dt>
+          <dd id="stat-expired">—</dd>
+        </div>
+        <div class="stat">
+          <dt>Области</dt>
+          <dd id="stat-districts">—</dd>
+        </div>
+      </dl>
+    </section>
+
+    <main class="container">
+      <div class="toolbar">
+        <div class="segmented" role="tablist" aria-label="Статус">
+          <button class="seg is-active" data-scope="active" role="tab">Действащи</button>
+          <button class="seg" data-scope="expired" role="tab">Изтекли</button>
+          <button class="seg" data-scope="all" role="tab">Всички</button>
+        </div>
+
+        <div class="filters">
+          <label class="field">
+            <span class="field-label">Област</span>
+            <select id="filterDistrict" class="select">
+              <option value="">Всички области</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label">Дейност</span>
+            <select id="filterActivity" class="select">
+              <option value="">Всички дейности</option>
+            </select>
+          </label>
+          <button id="clearFilters" class="link-btn" hidden>Изчисти филтрите</button>
+        </div>
+      </div>
+
+      <div class="resultbar">
+        <p class="result-count" id="resultCount">—</p>
+        <div class="exports">
+          <button id="exportXlsx" class="btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Excel
+          </button>
+          <button id="exportCsv" class="btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            CSV
+          </button>
+        </div>
+      </div>
+
+      <div id="status" class="loading" role="status">Зареждане на данните…</div>
+      <div id="table" class="table"></div>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Неофициално огледало за по-удобно търсене и експорт. Данните се актуализират
+        ежедневно от
+        <a href="https://bioreg.mzh.government.bg/Home/DataBaseList" target="_blank" rel="noopener"
+          >bioreg.mzh.government.bg</a
+        >. Достоверността се потвърждава от официалния източник.
+      </p>
+    </footer>
+
+    <div id="detail" class="modal" hidden>
+      <div class="modal-backdrop" data-close></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="detailName">
+        <button class="modal-close" data-close aria-label="Затвори">✕</button>
+        <span id="detailStatus" class="pill"></span>
+        <h2 id="detailName" class="detail-name"></h2>
+        <dl class="detail-grid">
+          <div>
+            <dt>Договор</dt>
+            <dd id="detailContract" class="mono"></dd>
+          </div>
+          <div>
+            <dt>Контролиращо лице</dt>
+            <dd id="detailController"></dd>
+          </div>
+          <div>
+            <dt>Област</dt>
+            <dd id="detailDistrict"></dd>
+          </div>
+          <div>
+            <dt>Дейности</dt>
+            <dd id="detailActivities"></dd>
+          </div>
+          <div class="detail-full">
+            <dt>Сертификати</dt>
+            <dd id="detailCerts"></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
